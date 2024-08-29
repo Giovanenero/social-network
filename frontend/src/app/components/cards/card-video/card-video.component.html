@@ -1,0 +1,61 @@
+<div class="card">
+  <youtube-player
+    *ngIf="video.videoId"
+    [videoId]="video.videoId"
+    height="150"
+    width="265"
+  ></youtube-player>
+
+  <div class="card-content">
+    <article class="card-description">
+      <h2 class="card-title">{{ video.title }}</h2>
+      <p>{{ video.description }}</p>
+    </article>
+    <div class="tags">
+      <span *ngFor="let tag of video.tags">{{ tag }}</span>
+    </div>
+    <div class="card-info">
+      <div>
+        <ng-icon name="bootstrapHandThumbsUp"></ng-icon>
+        <p>{{ video.likeCount }}</p>
+      </div>
+      <div>
+        <ng-icon name="bootstrapHandThumbsDown"></ng-icon>
+        <p>{{ video.dislikeCount }}</p>
+      </div>
+      <div>
+        <ng-icon name="bootstrapEye"></ng-icon>
+        <p>{{ getViews(video.viewCount) }}</p>
+      </div>
+      <div>
+        <ng-icon name="bootstrapAward"></ng-icon>
+        <p>{{ video.favoriteCount }}</p>
+      </div>
+      <div>
+        <ng-icon name="bootstrapDownload"></ng-icon>
+        <p>{{ video.publishedAt }}</p>
+      </div>
+      <div>
+        <ng-icon name="bootstrapClock"></ng-icon>
+        <p>{{ getDuration(video.duration) }}</p>
+      </div>
+      <div>
+        <ng-icon name="bootstrapChatSquare"></ng-icon>
+        <button
+          [ngClass]="getButtonClass()"
+          [disabled]="video.commentCount < 0" 
+          (click)="handleComments()"
+        >
+          {{ video.commentCount }} comentários
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-comments-popup 
+  *ngIf="showComments" 
+  [videoId]="video.videoId"
+  (close)="handleComments()"
+>
+</app-comments-popup>

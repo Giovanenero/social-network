@@ -1,0 +1,84 @@
+<div class="popup">
+  <div class="popup-comments">
+    <header>
+      <h1>Comentários</h1>
+    </header>
+    <main>
+      <ng-container *ngIf="isLoadingComments; else isNotLoadingComments">
+        <span class="loading"></span>
+      </ng-container>
+      <ng-template #isNotLoadingComments>
+        <ul class="comments">
+          <li *ngFor="let comment of comments" class="comment">
+            <div class="comment-top">
+              <div class="comment-button">
+                <button
+                  *ngIf="comment.replies.length > 0"
+                  (click)="handleReply(comment.commentId)"
+                >
+                  <ng-icon
+                    *ngIf="comment.show"
+                    name="bootstrapChevronDown"
+                  ></ng-icon>
+                  <ng-icon
+                    *ngIf="!comment.show"
+                    name="bootstrapChevronRight"
+                  ></ng-icon>
+                </button>
+              </div>
+              <div class="comment-author">
+                <img [src]="comment.authorProfileImageUrl" alt="logo" />
+                <div class="comment-info-author">
+                  <div>
+                    <span>{{ comment.authorDisplayName }}</span>
+                    <p>{{ comment.publishedAt }}</p>
+                  </div>
+                  <p>{{ comment.textOriginal }}</p>
+                  <div class="comment-likes">
+                    <div>
+                      <ng-icon name="bootstrapHandThumbsUp"></ng-icon>
+                      {{ comment.likeCount }}
+                    </div>
+                    <div>
+                      <ng-icon name="bootstrapHandThumbsDown"></ng-icon>
+                      {{ comment.dislikeCount }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="comment.show" class="replys">
+              <ul>
+                <li *ngFor="let reply of comment.replies">
+                  <div class="reply-author">
+                    <img [src]="reply.authorProfileImageUrl" alt="logo" />
+                    <div class="reply-info-author">
+                      <div>
+                        <span>{{ reply.authorDisplayName }}</span>
+                        <p>{{ reply.publishedAt }}</p>
+                      </div>
+                      <p>{{ reply.textOriginal }}</p>
+                      <div class="reply-likes">
+                        <div>
+                          <ng-icon name="bootstrapHandThumbsUp"></ng-icon>
+                          {{ reply.likeCount }}
+                        </div>
+                        <div>
+                          <ng-icon name="bootstrapHandThumbsDown"></ng-icon>
+                          {{ reply.dislikeCount }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </ng-template>
+    </main>
+    <footer>
+      <button (click)="onClose()">Fechar</button>
+    </footer>
+  </div>
+</div>

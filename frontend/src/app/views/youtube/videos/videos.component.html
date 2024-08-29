@@ -1,0 +1,20 @@
+<ng-container *ngIf="isLoadingVideos; else isNotLoadingVideos">
+  <div class="container-loading">
+    <span class="loading"></span>
+  </div>
+</ng-container>
+<ng-template #isNotLoadingVideos>
+  <ng-container *ngIf="videos.length > 0; else notShowVideos">
+    <div class="card-container">
+      <app-card-video
+        *ngFor="let video of videos"
+        [video]="video"
+      ></app-card-video>
+    </div>
+  </ng-container>
+  <ng-template #notShowVideos>
+    <div class="no-videos">
+      <h3>Não há vídeos para mostrar</h3>
+    </div>
+  </ng-template>
+</ng-template>

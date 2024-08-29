@@ -1,0 +1,68 @@
+<div class="container-metrics">
+  <ng-container *ngIf="isLoadingGraphics; else isNotLoadingGraphics">
+    <span class="loading"></span>
+  </ng-container>
+
+  <ng-template #isNotLoadingGraphics>
+    <ng-container *ngIf="!isObjectEmpty(likesChart.data); else noLikesChart">
+      <app-card-metrics [graphic]="likesChart"></app-card-metrics>
+    </ng-container>
+    <ng-template #noLikesChart>
+      <div class="container-no-data">
+        <h3>Ainda não há vídeo com curtidas</h3>
+      </div>
+    </ng-template>
+
+    <ng-container *ngIf="!isObjectEmpty(viewsChart.data); else noViewsChart">
+      <app-card-metrics [graphic]="viewsChart"></app-card-metrics>
+    </ng-container>
+    <ng-template #noViewsChart>
+      <div class="container-no-data">
+        <h3>Ainda não há vídeo com visualizações</h3>
+      </div>
+    </ng-template>
+
+    <ng-container
+      *ngIf="!isObjectEmpty(commentsChart.data); else noCommentsChart"
+    >
+      <app-card-metrics [graphic]="commentsChart"></app-card-metrics>
+    </ng-container>
+    <ng-template #noCommentsChart>
+      <div class="container-no-data">
+        <h3>Ainda não há vídeo com comentários</h3>
+      </div>
+    </ng-template>
+  </ng-template>
+
+  <table>
+    <caption>
+      Playlists
+    </caption>
+    <ng-container *ngIf="isLoadingPlaylists; else isNotLoadingPlaylists">
+      <ng-container *ngIf="playlists.length !== 0; else isNotPlaylists">
+        <thead>
+          <tr>
+            <th class="index">#</th>
+            <th class="title">Título</th>
+            <th class="videos">Quantidade de Vídeos</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let playlist of playlists; let i = index">
+            <td class="index">{{ i + 1 }}</td>
+            <td class="title">{{ playlist.title }}</td>
+            <td class="videos">{{ playlist.videosId.length }}</td>
+          </tr>
+        </tbody>
+      </ng-container>
+      <ng-template #isNotPlaylists>
+        <div>
+          <h3>Não há playlists para mostrar</h3>
+        </div>
+      </ng-template>
+    </ng-container>
+    <ng-template #isNotLoadingPlaylists>
+      <span class="loading"></span>
+    </ng-template>
+  </table>
+</div>

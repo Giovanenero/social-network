@@ -1,0 +1,142 @@
+.container-loading {
+    margin: 0px auto;
+    padding-top: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.not-show-channel {
+    padding-top: 120px;
+}
+
+.not-show-channel div {
+    width: calc(100% - 40px);
+    margin: 0 auto;
+    height: 50px;
+    background-color: #FF0000;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    border-radius: 5px;
+}
+
+.not-show-channel div h3 {
+    padding: 0px 20px;
+    color: white;
+}
+
+.channel {
+    padding-top: 120px;
+    width: 100%;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0px auto;
+    gap: 20px;
+}
+
+.channel img {
+    height: 100%;
+    width: 300px;
+    object-fit: cover;
+}
+
+.channel .info {
+    width: auto;
+    max-width: 400px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 5px;
+}
+
+.channel .info h1 {
+    font-weight: bold;
+    font-style: normal;
+}
+
+.channel .info p {
+    font-weight: 600;
+    font-style: normal;
+}
+
+.channel .info article {
+    width: 100%;
+    height: auto;
+    max-height: 80%;
+    overflow-y: auto;
+}
+
+.channel .info article p {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.channel .info .datas {
+    width: auto;
+    max-width: 200px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    height: min-content;
+    margin: auto 0;
+}
+
+.channel .info .datas div {
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    align-items: center;
+}
+
+.channel .info .datas div span {
+    font-weight: bold;
+}
+
+nav {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 20px;
+    border-bottom: 1px solid #1A1A1A;
+}
+
+nav ul {
+    width: auto;
+    height: 100%;
+    max-width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    align-items: center;
+}
+
+nav ul li  {
+    width: auto;
+    height: auto;
+}
+
+nav ul li button {
+    padding: 8px 20px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    transition: 0.2s;
+}
+
+nav ul li button:hover {
+    border-bottom: 2px solid #CECECE;
+    padding-bottom: 15px;
+}
+
+.sections {
+    padding: 20px;
+}

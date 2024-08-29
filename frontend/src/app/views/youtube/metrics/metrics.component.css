@@ -1,0 +1,102 @@
+.container-metrics {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.loading {
+    margin: 0px auto;
+}
+
+.container-no-data {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding: 0px 20px;
+    background-color: #FF0000;
+    border-radius: 5px;
+}
+
+.container-no-data h3 {
+    color: white;
+}
+
+.container-metrics table {
+    width: 100%;
+    height: auto;
+    max-height: 600px;
+    display: flex;
+    flex-direction: column;
+}
+
+.container-metrics table caption {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.container-metrics table thead,
+.container-metrics table tbody {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.container-metrics table thead tr,
+.container-metrics table tbody tr {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 5px 0px;
+    border: 1px solid #cecece;
+}
+
+.container-metrics table .index {
+    width: 50px;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container-metrics table .videos {
+    width: 250px;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container-metrics table .title {
+    width: calc(100% - 300px);
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+}
+
+.container-metrics table div {
+    width: 100%;
+    height: 50px;
+    background-color: #FF0000;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    border-radius: 5px;
+}
+
+.container-metrics table div h3 {
+    padding: 0px 20px;
+    color: white;
+}

@@ -1,0 +1,56 @@
+<ng-container *ngIf="isLoadingChannel; else isNotLoadingChannel">
+  <div class="container-loading">
+    <span class="loading"></span>
+  </div>
+</ng-container>
+<ng-template #isNotLoadingChannel>
+  <ng-container *ngIf="showChannel; else notShowChannel">
+    <div class="channel">
+      <img alt="logo-canal" [src]="channel.imgUrl" />
+      <div class="info">
+        <h1>{{ channel.title }}</h1>
+        <p>{{ channel.customUrl }}</p>
+        <article>
+          <p>{{ channel.description }}</p>
+        </article>
+        <div class="datas">
+          <div>
+            <span>{{ channel.subscriberCount }}</span>
+            <ng-icon name="bootstrapPeople"></ng-icon>
+          </div>
+          <div>
+            <span>{{ channel.videoCount }}</span>
+            <ng-icon name="bootstrapCameraVideo"></ng-icon>
+          </div>
+          <div>
+            <span>{{ channel.viewCount }}</span>
+            <ng-icon name="bootstrapEye"></ng-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #notShowChannel>
+    <div class="not-show-channel">
+      <div>
+        <h3>Não foi possível recuperar informações do canal</h3>
+      </div>
+    </div>
+  </ng-template>
+</ng-template>
+
+<nav>
+  <ul>
+    <li><button (click)="handleClick('videos')">Vídeos</button></li>
+    <li><button (click)="handleClick('metricas')">Métricas</button></li>
+  </ul>
+</nav>
+
+<div [ngSwitch]="value" class="sections">
+  <section *ngSwitchCase="'videos'">
+    <app-videos></app-videos>
+  </section>
+  <section *ngSwitchDefault>
+    <app-metrics></app-metrics>
+  </section>
+</div>

@@ -1,0 +1,30 @@
+.card-container {
+    display: flex;
+    width: 100%;
+    height: auto;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.container-loading {
+    margin: 0px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.no-videos {
+    width: 100%;
+    margin: 0 auto;
+    height: 50px;
+    background-color: #FF0000;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    border-radius: 5px;
+}
+
+.no-videos h3 {
+    padding: 0px 20px;
+    color: white;
+}

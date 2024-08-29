@@ -1,0 +1,102 @@
+.card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .card-content {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+    gap: 5px;
+    gap: 10px
+  }
+
+  .card-content article {
+    width: 100%;
+    height: 210px;  
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .card-content article h2 {
+    font-size: 1.35em;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+
+  .card-content article p {
+    color: #555;
+    font-size: 0.9em;
+    display: -webkit-box;
+    -webkit-line-clamp: 9;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .card-info {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px 17px;
+    overflow-y: auto;
+  }
+
+  .card-info div {
+    display: flex;
+    flex-direction: row;
+    width: auto;
+    height: auto;
+    gap: 5px;
+    align-items: center;
+  }
+
+  .card-info div button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  .card-info div .button-inactive {
+    color: inherit;
+    cursor: default;
+  }
+
+  .card-info div .button-active {
+    color: #0000EE;;
+  }
+  
+  .tags {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 5px;
+    overflow: hidden auto;
+  }
+
+  .tags span {
+    width: auto;
+    height: auto;
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 3px 5px;
+    border-radius: 7px;
+    font-size: 0.90em;
+  }
