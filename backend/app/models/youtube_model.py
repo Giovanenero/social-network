@@ -2,8 +2,6 @@ from googleapiclient.discovery import build
 from datetime import datetime
 import logging
 
-from app.models.mongodbclient import mongodbclient
-
 # Configuração de logging
 logging.basicConfig(level=logging.ERROR, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -46,12 +44,12 @@ class youtube_model:
                 "extraction": str(datetime.now()),
             })
 
-            #adiciona ou atualiza as informações no mongodb
-            client = mongodbclient('youtube', 'channels')
-            if len(client.find('channelId', channel_id)) > 0:
-                client.update('channelId', channel_id, channel_info)
-            else:
-                client.insert(channel_info)
+            ##adiciona ou atualiza as informações no mongodb
+            #client = mongodbclient('youtube', 'channels')
+            #if len(client.find('channelId', channel_id)) > 0:
+            #    client.update('channelId', channel_id, channel_info)
+            #else:
+            #    client.insert(channel_info)
 
 
             return channel_info
@@ -226,12 +224,12 @@ class youtube_model:
 
             # adiciona ou atualiza os comentários do video no mongodb
             #TODO: fazer uma rotina e não isso aqui
-            client = mongodbclient('youtube', "comments")
-            for comment in all_comments_data:
-                if len(client.find('commentId', comment['commentId'])) > 0:
-                    client.update('commentId', comment['commentId'], comment)
-                else:
-                    client.insert(comment)
+            #client = mongodbclient('youtube', "comments")
+            #for comment in all_comments_data:
+            #    if len(client.find('commentId', comment['commentId'])) > 0:
+            #        client.update('commentId', comment['commentId'], comment)
+            #    else:
+            #        client.insert(comment)
             
             return all_comments_data
         
@@ -305,12 +303,12 @@ class youtube_model:
 
             # adiciona ou atualiza os videos no mongodb
             #TODO: fazer uma rotina e não isso aqui
-            client = mongodbclient('youtube', "videos")
-            for video in videos_info:
-                if len(client.find('videoId', video['videoId'])) > 0:
-                    client.update('videoId', video['videoId'], video)
-                else:
-                    client.insert(video)
+            #client = mongodbclient('youtube', "videos")
+            #for video in videos_info:
+            #    if len(client.find('videoId', video['videoId'])) > 0:
+            #        client.update('videoId', video['videoId'], video)
+            #    else:
+            #        client.insert(video)
 
             return videos_info
         except Exception as e:

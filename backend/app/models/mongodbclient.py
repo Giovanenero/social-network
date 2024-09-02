@@ -1,12 +1,27 @@
+import gridfs
 from pymongo import MongoClient
 import logging
+from bson.objectid import ObjectId
 
 class mongodbclient:
-    def __init__(self, database, collection):
+    def __init__(self, database, collection=None):
         self.connection_string = "mongodb://localhost:27017"
         self.client = MongoClient(self.connection_string)
         self.database = self.client[database]
-        self.collection = self.database[collection]
+        if collection:
+            self.collection = self.database[collection]
+        else:
+            self.collection = None
+
+    def get_image_gridFS(self, file_id):
+        try:
+            fs = gridfs.GridFS(self.database)
+            file = fs.get(ObjectId(file_id))
+            if file:
+                return file
+        except Exception as e:
+            print(f"erro ao coletar arquivo com id {file_id}: {e}")
+        return ""
 
     def find(self, key, value):
         try:

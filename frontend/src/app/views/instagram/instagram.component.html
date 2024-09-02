@@ -1,1 +1,64 @@
-<p>instagram works!</p>
+<div class="container-instagram">
+  <section class="section-users padding">
+    <ul class="users">
+      <li *ngFor="let profile of profiles">
+        <button (click)="handleProfile(profile.username)">
+          <img [src]="profile.url" alt="user-logo" />
+          <p>{{ profile.username }}</p>
+        </button>
+      </li>
+    </ul>
+  </section>
+
+  <span class="line"></span>
+
+  <section class="section-profile padding">
+    <img alt="logo" [src]="selectedProfile.url"/>
+    <div class="profile-info">
+      <div *ngIf="selectedProfile.fullname; else onlyUsername">
+        <h1>{{ selectedProfile.fullname }}</h1>
+        <p>{{ selectedProfile.username }}</p>
+      </div>
+      <ng-template #onlyUsername>
+        <div>
+          <h1>{{ selectedProfile.username }}</h1>
+        </div>
+      </ng-template>
+      <ul>
+        <li><p><span>{{ selectedProfile.mediacount }}</span> publicações</p></li>
+        <li><p><span>{{ selectedProfile.followers }}</span> seguidores</p></li>
+        <li><p><span>{{ selectedProfile.followees }}</span> seguindo</p></li>
+      </ul>
+      <article>
+        <p>{{ selectedProfile.biography }}</p>
+      </article>
+    </div>
+  </section>
+
+  <span class="line"></span>
+
+  <section class="section-similar padding">
+    <h3>Perfils similares</h3>
+    <ul>
+      <li></li>
+    </ul>
+  </section>
+
+  <nav class="padding">
+    <ul>
+      <li><button (click)="handleClick('posts')">Postagens</button></li>
+      <li><button (click)="handleClick('metrics')">Métricas</button></li>
+    </ul>
+  </nav>
+
+  <ng-container *ngIf="isPost; else isMetrics">
+    <section class="padding">
+
+    </section>
+  </ng-container>
+  <ng-template #isMetrics>
+    <section class="padding">
+
+    </section>
+  </ng-template>
+</div>

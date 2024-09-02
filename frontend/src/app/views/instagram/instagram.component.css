@@ -1,0 +1,201 @@
+.container-instagram {
+    position: relative;
+    top: 100px;
+    left: 0;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    animation: init 0.5s linear;
+    gap: 20px;
+}
+
+.container-instagram .section-users {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    height: 100px;
+    padding-top: 20px;
+}
+
+.container-instagram .section-users ul {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.container-instagram .section-users ul li {
+    width: auto;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container-instagram .section-users ul li button{
+    width: auto;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    gap: 2px;
+}
+
+.container-instagram .section-users ul li button img {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    transition: 0.5s;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+.container-instagram .section-users ul li button p {
+    transition: 0.5s;
+}
+
+.container-instagram .section-users ul li button:hover img {
+    width: 85px;
+    height: 85px;
+}
+
+.container-instagram .section-users ul li button:hover p {
+    font-size: 1.2em;
+}
+
+.container-instagram .section-profile {
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.container-instagram .section-profile img {
+    height: 100%;
+    width: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+.container-instagram .section-profile .profile-info {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    height: auto;
+    max-width: 400px;
+    gap: 5px;
+}
+
+.container-instagram .section-profile .profile-info div h1 {
+    font-weight: bold;
+    font-style: normal;
+}
+
+.container-instagram .section-profile .profile-info div p {
+    font-weight: 600;
+    font-style: normal;
+}
+
+.container-instagram .section-profile .profile-info ul {
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.container-instagram .section-profile .profile-info ul li {
+    width: auto;
+    height: auto;
+}
+
+.container-instagram .section-profile .profile-info ul li p span {
+    font-weight: 600;
+}
+
+.container-instagram .section-similar {
+    background-color: yellow;
+    width: auto;
+    height: auto;
+}
+
+.container-instagram nav {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #1A1A1A;
+}
+
+.container-instagram nav ul {
+    width: auto;
+    height: 100%;
+    max-width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    align-items: center;
+}
+
+.container-instagram nav ul li  {
+    width: auto;
+    height: auto;
+}
+
+.container-instagram nav ul li button {
+    padding: 8px 20px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    transition: 0.2s;
+}
+
+.container-instagram nav ul li button:hover {
+    border-bottom: 2px solid #CECECE;
+    padding-bottom: 15px;
+}
+
+@keyframes init {
+    0% {
+    top: 300px;
+    }
+  
+    100% {
+      top: 100px;
+    }
+  }
+
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+.animate-profile {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+
+.line {
+    border-bottom: 1px solid #282828;
+}
+
+.padding {
+    padding: 0px 20px;
+}
