@@ -33,7 +33,6 @@ export class CommentsPopupComponent implements OnInit {
   }
 
   getComments(): void {
-    console.log(this.videoId);
     this.youtubeService.getComments(this.videoId).subscribe({
       next: (data: Comment[]) => {
         this.comments = data.map(element => {
@@ -64,9 +63,5 @@ export class CommentsPopupComponent implements OnInit {
     if (comment) {
       comment.show = !comment.show;
     }
-  }
-
-  closePopup(): void {
-    console.log('fechar popup!');
   }
 }

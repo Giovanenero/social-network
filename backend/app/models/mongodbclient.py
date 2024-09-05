@@ -23,16 +23,15 @@ class mongodbclient:
             print(f"erro ao coletar arquivo com id {file_id}: {e}")
         return ""
 
-    def find(self, key, value):
+    def find(self, key, value, skip = 0, limit = None):
         try:
             query = {key: value}
-            data = []
-            response = self.collection.find(query)
-            for registry in response:
-                data.append(registry)
-            return data
+            cursor = self.collection.find(query).skip(skip)
+            if limit is not None:
+                cursor = cursor.limit(limit)
+            return list(cursor)
         except Exception as e:
-            logging.error("Error finding data: %s", e)
+            logging.error("Error finding data: %s", e, exc_info=True)
             return []
 
     def insert(self, data, many = False):

@@ -1,0 +1,79 @@
+<div class="container-card-post">
+  <div class="container-sidecar">
+    <div class="images-buttons">
+      <button
+        *ngIf="mediaIterator > 0"
+        (click)="handleClickButton(true)"
+        id="button-left"
+        [disabled]="mediaIterator === 0"
+      >
+        <ng-icon class="ng-icon" name="bootstrapChevronLeft"></ng-icon>
+      </button>
+      <button
+        *ngIf="mediaIterator < post.medias.length - 1"
+        (click)="handleClickButton(false)"
+        id="button-right"
+        [disabled]="mediaIterator === post.medias.length"
+      >
+        <ng-icon class="ng-icon" name="bootstrapChevronRight"></ng-icon>
+      </button>
+    </div>
+
+    <ng-container *ngIf="post.medias[mediaIterator].isVideo; else isNotVideo">
+      <iframe
+        [src]="getVideo(post.medias[mediaIterator].url)"
+        frameborder="0" 
+        scrolling="no" 
+        allowtransparency="true"
+      >
+      </iframe>
+    </ng-container>
+    <ng-template #isNotVideo>
+      <img alt="img" [src]="post.medias[mediaIterator].url" />
+    </ng-template>
+  </div>
+
+  <div class="container-date">
+    <ng-icon name="bootstrapClock"></ng-icon>
+    {{ getDate(post.date) }}
+  </div>
+
+  <article>
+    <pre>{{ post.caption }}</pre>
+  </article>
+
+  <div class="card-info">
+    <div>
+      <ng-icon name="bootstrapHeart"></ng-icon>
+      <p>{{ post.likeCount }}</p>
+    </div>
+    <div>
+      <ng-icon name="bootstrapChatSquare"></ng-icon>
+      <button
+        [ngClass]="getButtonClass()"
+        [disabled]="post.commentCount < 0"
+        (click)="handleComments()"
+      >
+        {{ post.commentCount }} comentários
+      </button>
+    </div>
+    <ng-container *ngIf="post.isVideo">
+      <div>
+        <ng-icon name="bootstrapEye"></ng-icon>
+        {{ post.videoViewCount }}
+      </div>
+      <div>
+        <ng-icon name="bootstrapClock"></ng-icon>
+        {{ getDuration(post.duration) }}
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<app-instagram-comments-popup 
+  *ngIf="showComments" 
+  [mediaid]="post.mediaid"
+  [useridOwner]="post.userid"
+  (close)="handleComments()"
+>
+</app-instagram-comments-popup>

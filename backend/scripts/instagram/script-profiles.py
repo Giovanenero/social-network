@@ -9,17 +9,18 @@ from dotenv import load_dotenv
 client = MongoClient('mongodb://localhost:27017/')
 db = client['instagram']
 collection = db['profiles']
+collection.create_index('userid', unique=True)
 fs = gridfs.GridFS(db)
 
-L = instaloader.Instaloader()
-
-load_dotenv("../.env")
+# Carregar variáveis de ambiente
+load_dotenv("../../../.env")
 EMAIL = os.getenv("INSTAGRAM_EMAIL")
 PASSWORD = os.getenv("INSTAGRAM_PASSWORD")
 
-def get_profile(username, file_path):
-    profile = instaloader.Profile.from_username(L.context, username)
-    file = fs.find({'filename': {'$regex': f"{username}_profile_pic.*"}})[0]
+L = instaloader.Instaloader()
+L.login(EMAIL, PASSWORD)
+
+def get_profile(profile):
     result = {}
     result['username'] = profile.username
     result['fullname'] = profile.full_name
@@ -28,42 +29,49 @@ def get_profile(username, file_path):
     result['followers'] = profile.followers
     result['followees'] = profile.followees
     result['mediacount'] = profile.mediacount
-    result['userid'] = profile.userid
-    result['url'] = f"http://localhost:5000/instagram/image/{file._id}" if file else ""
-    result['extraction'] = str(datetime.now())
+    result['userid'] = str(profile.userid)
 
-    try:
+    return result
+
+usernames = ['wise.bifor', 'wise.archival', 'wise.thisplay', 'wise.sportskills', 'wise.cado', 'wise.systems']
+
+def upload_imagem(username, profile):
+    try: 
+        file_path = os.path.join('../downloads', f'{username}_profile_pic.jpg')
         response = requests.get(profile.profile_pic_url)
         if response.status_code == 200:
             with open(file_path, 'wb') as f:
                 f.write(response.content)
                 print(f'Imagem de perfil salva em: {file_path}')
-    except:
-        print(f"Não foi possível fazer download da imagem do {username}")
 
-    return result
+            existing_file = db.fs.files.find_one({'filename': f'{username}_profile_pic.jpg'})
+            if existing_file:
+                existing_file_id = existing_file['_id']
+                fs.delete(existing_file_id)
+                print(f'Imagem de perfil existente {existing_file_id} removida do MongoDB')
 
-def upload_image(username, file_path):
-    if os.path.exists(file_path):
-        with open(file_path, 'rb') as f:
-            file_data = f.read()
-            file_id = fs.put(file_data, filename=f'{username}_profile_pic.jpg')
+            with open(file_path, 'rb') as f:
+                file_data = f.read()
+                file_id = fs.put(file_data, filename=f'{username}_profile_pic.jpg')
+                if os.path.exists(file_path):
+                    os.remove(file_path)
+                print(f"Imagem de perfil {file_id} foi importado ao mongodb")
+
             if os.path.exists(file_path):
                 os.remove(file_path)
-            print(f"id do arquivo: {file_id}")
-            return file_id
-    else:
-        print(f"path {file_path} não existe!")
-        return ''
 
-usernames = ['wise.bifor', 'wise.archival', 'wise.thisplay', 'wise.sportskills', 'wise.cado', 'wise.systems']
+            return f"http://localhost:5000/instagram/image/{file_id}" 
+    except:
+        print(f'não foi possível importar imagem de {username} para o mongodb')
 
-L.login(EMAIL, PASSWORD)
+    return ''
 
 for username in usernames:
-    file_path = os.path.join('downloads', f'{username}_profile_pic.jpg')
+    profile = instaloader.Profile.from_username(L.context, username)
     try:
-        data = get_profile(username, file_path)
+        data = get_profile(profile)
+        data['url'] = upload_imagem(username, profile)
+        data['extraction'] = str(datetime.now())
         query = {'username': username}
         if len(list(collection.find(query))) > 0:
             update_data = {"$set": data}
@@ -72,9 +80,9 @@ for username in usernames:
         else:
             collection.insert_one(data)
             print("imagem inserida no mongodb")
-    except:
-        if os.path.exists(file_path):
-            os.remove(file_path)
+        print('')
+    except: 
+        print(f"não foi possível extrair dados de {username}")
 
 # similar_accounts = profile.get_similar_accounts()
 # for similar_profile in similar_accounts:
@@ -82,6 +90,7 @@ for username in usernames:
 
 # for post in profile.get_tagged_posts():
 #     print(f"Postagem {post.shortcode}: {post.caption}")
+
 
 
 

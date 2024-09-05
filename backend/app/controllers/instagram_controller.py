@@ -3,20 +3,17 @@ from app.models.instagram_model import instagram_model
 from app.models.mongodbclient import mongodbclient
 
 instagram_bp = Blueprint('instagram', __name__)
-usernames = ['wise.bifor', 'wise.archival', 'wise.thisplay', 'wise.sportskills', 'wise.cado', 'wise.systems']
 
 @instagram_bp.route('/getprofiles', methods=['GET'])
 def get_profiles():
     try:
         profiles = instagram_model().get_profiles()
-        print(profiles)
         return jsonify(profiles), 200
     except Exception as e:
         return jsonify([]), 400
 
 @instagram_bp.route('/image/<file_id>', methods=['GET'])
 def get_image(file_id):
-    print(file_id)
     try:
         client = mongodbclient('instagram')
         file = client.get_image_gridFS(file_id)
@@ -25,26 +22,42 @@ def get_image(file_id):
     except:
         return jsonify({}), 400
 
-# @instagram_bp.route('/getposts', methods=['GET'])
-# def get_posts():
-#     try:
-#         username = request.args.get('username')
-#         start = request.args.get('start')
-#         end = request.args.get('end')
+@instagram_bp.route('/getposts', methods=['GET'])
+def get_posts():
+    try:
+        userid = request.args.get('userid')
+        skip = int(request.args.get('skip'))
+        limit = int(request.args.get('limit'))
+        posts = instagram_model().get_posts(userid, skip, limit)
 
-#         if not username or not start or not end:
-#             return jsonify([]), 400
-#         elif end - start < 0 or end - start > 16:
-#             return jsonify([]), 400
-        
-#         return jsonify(instagram_model().get_posts(username, start, end))
-#     except:
-#         return jsonify([]), 400
+        def remove_id(data):
+            data.pop('_id', None)
+            return data
+
+        posts = list(map(remove_id, posts))
+        return jsonify(posts)
+    except:
+        return jsonify([]), 400
     
-# @instagram_bp.route('/getcomments', methods=['GET'])
-# def get_comments():
-#     try:
-#         shortcode = request.args.get('shortcode')
-#         return jsonify(instagram_model.get_comments(shortcode))
-#     except:
-#         return jsonify({}), 400
+@instagram_bp.route('/getmetrics', methods=['GET'])
+def get_metrics():
+    try:
+        user_id = request.args.get('userid')
+        return jsonify(instagram_model().get_metrics(user_id)), 200
+    except:
+        return jsonify({}), 400
+    
+@instagram_bp.route('/getcomments', methods=['GET'])
+def get_comments():
+    try:
+        mediaid = request.args.get('mediaid')
+        comments = instagram_model().get_comments(mediaid)
+        def remove_id(data):
+            data.pop('_id', None)
+            return data
+
+        comments = list(map(remove_id, comments))
+
+        return jsonify(comments), 200
+    except:
+        return jsonify({}), 400

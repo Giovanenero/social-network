@@ -169,6 +169,48 @@
     padding-bottom: 15px;
 }
 
+.container-instagram .section-posts {
+    width: 100%;
+    height: auto;
+    max-height: 1000px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.container-instagram .button-pages {
+    margin: 0px auto;
+    width: auto;
+    height: auto;
+    gap: 3px;
+    display: flex;
+}
+
+.container-instagram .button-pages button {
+    cursor: pointer;
+    background-color: transparent;
+    border-radius: 5px;
+    border: 1px solid #282828;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+    width: 30px;
+    height: 20px;
+    box-sizing: border-box;
+    justify-content: center;
+}
+
+.container-instagram .button-pages .selected-button {
+    background-color: black;
+    color: white;
+}
+
+.container-instagram .button-pages .button-next-prev {
+    width: 80px;
+}
+
 @keyframes init {
     0% {
     top: 300px;

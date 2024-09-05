@@ -26,8 +26,7 @@ export class VideosComponent {
     this.youtubeService.getVideos().subscribe({
       next: (data: Video[]) => {
         this.videos = data.map((element) => {
-          let date = new Date(element.publishedAt);
-          let publishedAt = `${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`;
+          let publishedAt = new Date(element.publishedAt).toLocaleDateString();
           return {
             ...element,
             publishedAt: publishedAt

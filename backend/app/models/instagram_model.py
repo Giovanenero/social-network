@@ -48,63 +48,70 @@ class instagram_model:
                 print(f"não foi possível obter dados de {username}: {e}")
         return profiles    
     
-    def get_posts(self, username, start, end):
+    def get_posts(self, userid, skip, limit):
         result = []
         try:
-            profile = instaloader.Profile.from_username(self.L.context, username)
-            for post in profile.get_posts():
-                data = {}
-                data['shortcode'] = post.shortcode
-
-                #post = instaloader.Post.from_shortcode(self.L.context, post.shortcode)
-
-                data['isVideo'] = post.is_video
-                if data['isVideo']:
-                    data['duration'] = post.video_duration
-                    data['url'] = post.video_url
-                    data['viewCount'] = post.video_view_count
-                else:
-                    data['url'] = post.url
-
-                data['caption'] = post.caption
-                data['date'] = post.date
-                data['commentsCount'] = post.comments
-                data['likes'] = post.likes
-
-                result.append(data)
+            client = mongodbclient('instagram', 'posts')
+            posts = client.find('userid', userid, skip, limit)
+            return posts
         except Exception as e:
-            print(f"erro ao coletar postagens de {username}: {e}")
+            print(f"erro ao coletar postagens de {userid}: {e}")
 
         return result
     
-    def get_comments(self, shortcode):
+
+    def get_metrics(self, userid, last_posts = 5):
+
+        client = mongodbclient('instagram', 'posts')
+        profile = mongodbclient('instagram', 'profiles').find('userid', userid)[0]
+
+        followers = profile['followers']
+
+        posts = list(client.find('userid', userid))
+
+        totalLikes = 0
+        totalComments = 0
+        totalVideos = 0
+        totalDuration = 0
+
+        for post in posts:
+            totalLikes += post['likeCount']
+            totalComments += post['commentCount']
+            totalVideos += 1 if post['isVideo'] else 0
+            totalDuration += post['duration']
+
+        i = 0
+        last = []
+        while(i < last_posts and len(post) > i):
+            likes = posts[i]['likeCount']
+            comments = posts[i]['commentCount']
+            interactions = likes + comments
+            last.append({
+                'likes': likes,
+                'comments': comments,
+                'engagement': (interactions / followers) * 100
+            })
+        
+        interactions = totalLikes + totalComments
+        engagement_rate = ( interactions / followers ) * 100 if followers else 0
+
+        return {
+            'likesCount': totalLikes,
+            'commentsCount': totalComments,
+            'lastPosts': last,
+            'interactions': interactions,
+            'engagementRate': engagement_rate
+        }
+
+
+
+    
+    def get_comments(self, mediaid):
         result = []
         try:
-            post = instaloader.Post.from_shortcode(self.L.context, shortcode)
-            for comment in post.get_comments():
-                data = {}
-                data['text'] = comment.text
-                data['username'] = comment.owner.username
-                data['date'] = comment.created_at_utc
-                data['likesCount'] = comment.likes_count
-                commenter_profile = instaloader.Profile.from_id(self.L.context, comment.owner.userid)
-                data['url'] = commenter_profile.profile_pic_url
-
-                data_answers = []
-                for answer in post.answers:
-                    #answer = instaloader.PostCommentAnswer(post.id, post.created_at_utc, post.text, post.owner, post.likes_count)
-                    print(answer)
-                    data_answer = {}
-                    data_answer['date'] = answer.created_at_utc
-                    data_answer['likesCount'] = answer.likes_count
-                    data_answer['text'] = answer.text
-                    data_answer['url'] = answer.owner.profile_pic_url
-                    data_answer['unsername'] = answer.owner.unsername
-                    data_answers.append(data_answer)
-
-                data['answers'] = data_answers
-
-                result.append(data)
+            client = mongodbclient('instagram', 'comments')
+            comments = list(client.find('mediaid', mediaid))    
+            return comments
         except Exception as e:
-            print(f"erro ao coletar comentários {shortcode}: {e}")
+            print(f"erro ao coletar comentários {mediaid}: {e}")
         return result

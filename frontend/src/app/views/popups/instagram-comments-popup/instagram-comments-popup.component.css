@@ -1,0 +1,202 @@
+.loading {
+    margin:  auto;
+}
+
+.popup-comments {
+    max-width: 1000px;
+    width: 80%;
+    height: 500px;  
+    max-height: 80%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 5px 5px 5px rgba(19,19,19,0.2);
+    border-radius: 10px;
+}
+
+.popup-comments header {
+    border-bottom: 1px solid #ccc;
+    height: 70px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0px 30px;
+    color: #333;
+    font-weight: bold;
+}
+
+.popup-comments main {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 30px;
+    width: 100%;
+    height: calc(100% - 140px);
+    overflow: hidden auto;
+}
+
+.popup-comments main .comments {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.popup-comments main .comments .comment {
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.popup-comments main .comments .comment .comment-top {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    padding: 5px 0px;
+    gap: 5px;
+}
+
+.popup-comments main .comments .comment-top .comment-button {
+    width: 20px;
+    height: min-content;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.popup-comments main .comments .comment .comment-top .comment-button button {
+    border-radius: 50%;
+    border: none;
+    transition: 0.5s;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+}
+
+.popup-comments main .comments .comment .comment-top .comment-button button:hover {
+    background-color: #cecece;
+}
+
+.popup-comments main .comments .comment .comment-top .comment-author,
+.popup-comments main .comments .comment .reply-author  {
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    width: 100%;
+    gap: 5px;
+}
+
+.popup-comments main .comments .comment .comment-top .comment-author img,
+.popup-comments main .comments .comment .reply-author img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.popup-comments main .comments .comment .comment-top .comment-author .comment-info-author,
+.popup-comments main .comments .comment .reply-author .reply-info-author {
+    width: calc(100% - 40px);
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.popup-comments main .comments .comment .comment-top .comment-author .comment-info-author div,
+.popup-comments main .comments .comment .reply-author .reply-info-author div {
+    display: flex;
+    flex-direction: row;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    align-items: center;
+    gap: 10px;
+}
+
+.popup-comments main .comments .comment .comment-top .comment-author .comment-info-author div span,
+.popup-comments main .comments .comment .reply-author .reply-info-author div span {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    font-weight: bold;
+    font-size: 0.95em;
+}
+
+.popup-comments main .comments .comment .comment-top .comment-author .comment-info-author p,
+.popup-comments main .comments .comment .reply-author .reply-info-author p {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    font-size: 0.90em;
+}
+
+.popup-comments main .comments .comment .comment-top .comment-author .comment-info-author div p,
+.popup-comments main .comments .comment .reply-author .reply-info-author div p {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    font-size: 0.95em;
+}
+
+.popup-comments main .comments .comment .comment-top .comment-author .comment-info-author .comment-likes,
+.popup-comments main .comments .comment .comment-top .reply-author .reply-info-author .reply-likes {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+
+.popup-comments main .comments .comment .replys {
+    width: 100%;
+    height: auto;
+}
+
+.popup-comments main .comments .comment .replys ul {
+    width: 100%;
+    height: auto;
+    padding-left: 30px;
+    gap: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.popup-comments main .comments .comment .replys ul li {
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 40px;
+}
+
+.popup-comments footer {
+    width: 100%;
+    height: 70px;
+    border-top: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0px 20px;
+}
+
+.popup-comments footer button {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    background-color: black;
+    text-transform: uppercase;
+}
+
+.popup-comments footer button:hover {
+    background-color: rgb(32, 32, 32);
+}

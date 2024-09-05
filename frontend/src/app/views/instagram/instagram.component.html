@@ -52,13 +52,26 @@
   </nav>
 
   <ng-container *ngIf="isPost; else isMetrics">
-    <section class="padding">
-
+    <div class="button-pages">
+      <button class="button-next-prev" (click)="handlePrev()">
+        <ng-icon name="bootstrapChevronLeft"></ng-icon>
+        Anterior
+      </button>
+      <button [ngClass]="index === selectedPage ? 'selected-button' : ''" *ngFor="let index of indexs" (click)="handlePage(index)">
+        {{ index }}
+      </button>
+      <button class="button-next-prev" (click)="handleNext()">
+        Próximo
+        <ng-icon name="bootstrapChevronRight"></ng-icon>
+      </button>
+    </div>
+    <section class="padding section-posts">
+      <app-card-post *ngFor="let post of posts" [post]="post"></app-card-post>
     </section>
   </ng-container>
   <ng-template #isMetrics>
     <section class="padding">
-
+      <app-instagram-metrics></app-instagram-metrics>
     </section>
   </ng-template>
 </div>
