@@ -20,7 +20,8 @@ import {
   bootstrapChevronRight,
   bootstrapChevronLeft,
   bootstrapClock,
-  bootstrapHeart
+  bootstrapHeart,
+  bootstrapHandIndex
 } from '@ng-icons/bootstrap-icons';
 
 @NgModule({
@@ -45,7 +46,8 @@ import {
       bootstrapChevronRight,
       bootstrapChevronLeft,
       bootstrapClock,
-      bootstrapHeart
+      bootstrapHeart,
+      bootstrapHandIndex
     }),
   ],
   exports: [NgIconsModule],

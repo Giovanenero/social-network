@@ -8,7 +8,6 @@ from pymongo import MongoClient
 import gridfs
 from dotenv import load_dotenv
 
-# Conectar ao MongoDB
 client = MongoClient('mongodb://localhost:27017/')
 db = client['instagram']
 collection_profiles = db['profiles']
@@ -16,7 +15,6 @@ collection_posts = db['posts']
 collection_posts.create_index(['mediaid', 'userid'])
 fs = gridfs.GridFS(db)
 
-# Carregar variáveis de ambiente
 load_dotenv("../../../.env")
 EMAIL = os.getenv("INSTAGRAM_EMAIL")
 PASSWORD = os.getenv("INSTAGRAM_PASSWORD")
@@ -28,8 +26,6 @@ insertPostCount = 0
 errorPostCount = 0
 errorMediaCount = 0
 postCount = 0
-
-filenames = []
 
 # Função para upload de imagem
 def upload_image(filename, url):

@@ -34,7 +34,7 @@ export class CardPostComponent implements OnInit {
   constructor(private sanitizer: DomSanitizer) {}
 
   ngOnInit(): void {
-    console.log(this.post.caption.includes('\n') == true ? "sim" : 'nao')
+    
   }
 
   getButtonClass(): string {

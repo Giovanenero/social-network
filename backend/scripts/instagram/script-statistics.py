@@ -6,12 +6,14 @@ db = client['instagram']
 collection_profiles = db['profiles']
 collection_posts = db['posts']
 collection_statistics = db['statistics']
-collection_statistics.create_index('userid')
 
 profiles = list(collection_profiles.find())
 
+date_today = str(datetime.today().date())
+
 for profile in profiles:
-    posts = list(collection_posts.find({'userid': profile['userid']}))
+    userid = profile['userid']
+    posts = list(collection_posts.find({'userid': userid}))
     likes = 0
     comments = 0
 
@@ -22,25 +24,21 @@ for profile in profiles:
     followers = profile.get('followers', 0)
 
     data = {
-        'userid': profile['userid'],
+        'userid': userid,
         'likes': likes,
         'comments': comments,
         'followers': followers,
-        'date': datetime.today(),
+        'date': date_today,
     }
 
-    primeiro_dia_mes_atual = datetime.today().replace(day=1)
-    ultimo_dia_mes_passado = primeiro_dia_mes_atual - timedelta(days=1)
-    primeiro_dia_mes_passado = ultimo_dia_mes_passado.replace(day=1)
+    query = {'date': date_today, 'userid': userid}
+    statistics = list(collection_statistics.find({'userid': userid}))
+    collection_statistics.update_one(query, {"$set": data}, upsert=True)
 
-    print(primeiro_dia_mes_atual)
-    print(primeiro_dia_mes_passado)
-    print(ultimo_dia_mes_passado)
-    print('')
-
-    query = {'date': data['date'], 'userid': data['userid']}
-
-    if collection_statistics.count_documents(query) > 0:
-        collection_statistics.update_one(query, {"$set": data})
-    else:
-        collection_statistics.insert_one(data)
+        
+date_30_days_ago = datetime.fromisoformat(date_today) - timedelta(days=30)
+date_30_days_ago = date_30_days_ago.date()
+statistics = list(collection_statistics.find())
+for statistic in statistics:
+    if date_30_days_ago > datetime.fromisoformat(statistic['date']).date():
+        collection_statistics.delete_one({'date': statistic['date']}) 

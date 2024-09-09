@@ -62,49 +62,50 @@ class instagram_model:
 
     def get_metrics(self, userid, last_posts = 5):
 
-        client = mongodbclient('instagram', 'posts')
-        profile = mongodbclient('instagram', 'profiles').find('userid', userid)[0]
+        try:
+            posts = list(mongodbclient('instagram', 'posts').find('userid', userid))
+            profile = mongodbclient('instagram', 'profiles').find('userid', userid)[0]
+            statistics = list(mongodbclient('instagram', 'statistics').find('userid', userid))
 
-        followers = profile['followers']
+            followers = profile['followers']
 
-        posts = list(client.find('userid', userid))
+            totalLikes = 0
+            totalComments = 0
+            totalVideos = 0
+            totalDuration = 0
 
-        totalLikes = 0
-        totalComments = 0
-        totalVideos = 0
-        totalDuration = 0
+            for post in posts:
+                totalLikes += post['likeCount']
+                totalComments += post['commentCount']
+                totalVideos += 1 if post['isVideo'] else 0
+                totalDuration += post['duration']
 
-        for post in posts:
-            totalLikes += post['likeCount']
-            totalComments += post['commentCount']
-            totalVideos += 1 if post['isVideo'] else 0
-            totalDuration += post['duration']
+            i = 0
+            last = []
+            while(i < last_posts and len(post) > i):
+                likes = posts[i]['likeCount']
+                comments = posts[i]['commentCount']
+                interactions = likes + comments
+                last.append({
+                    'likes': likes,
+                    'comments': comments,
+                    'engagement': (interactions / followers) * 100
+                })
+                i += 1
 
-        i = 0
-        last = []
-        while(i < last_posts and len(post) > i):
-            likes = posts[i]['likeCount']
-            comments = posts[i]['commentCount']
-            interactions = likes + comments
-            last.append({
-                'likes': likes,
-                'comments': comments,
-                'engagement': (interactions / followers) * 100
-            })
-        
-        interactions = totalLikes + totalComments
-        engagement_rate = ( interactions / followers ) * 100 if followers else 0
+            interactions = totalLikes + totalComments
 
-        return {
-            'likesCount': totalLikes,
-            'commentsCount': totalComments,
-            'lastPosts': last,
-            'interactions': interactions,
-            'engagementRate': engagement_rate
-        }
-
-
-
+            return {
+                'userid': userid,
+                'likesCount': totalLikes,
+                'commentsCount': totalComments,
+                'lastPosts': last,
+                'interactions': interactions,
+                'statistics': statistics,
+            }
+        except Exception as e:
+            print(e)
+        return {}
     
     def get_comments(self, mediaid):
         result = []

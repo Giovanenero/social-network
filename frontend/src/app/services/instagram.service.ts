@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Profile } from '../models/Profile';
 import { Post } from '../models/Post';
 import { InstagramComment } from '../models/IntagramComment';
+import { InstagramMetrics } from '../models/InsgramMetrics';
 
 export interface dataPost {
   skip: number;
@@ -100,6 +101,32 @@ export class InstagramService {
             : [];
           const updatedComments = [...existingComments, ...data];
           this.cache.set(cacheKey, updatedComments);
+          this.cacheSubject.next(new Map(this.cache));
+        })
+      );
+  }
+
+  getMetrics(userid: string): Observable<InstagramMetrics> {
+    const cacheKey = 'metrics';
+    if (this.cache.has(cacheKey)) { 
+      const metrics = this.cache.get(cacheKey);
+      if (metrics) {
+        const filteredPosts = metrics.filter((data: any) => {return data.userid == userid });
+        if (filteredPosts.length > 0) {
+          return of(filteredPosts);
+        }
+      }
+    }
+    let params = new HttpParams().set('userid', userid)
+    return this.http
+      .get<InstagramMetrics>(`${this.apiUrl}/instagram/getmetrics`, { params })
+      .pipe(
+        tap((metrics: InstagramMetrics) => {
+          const existingMetrics = this.cache.has(cacheKey)
+            ? this.cache.get(cacheKey)
+            : [];
+          const updatedMetrics = [...existingMetrics, metrics];
+          this.cache.set(cacheKey, updatedMetrics);
           this.cacheSubject.next(new Map(this.cache));
         })
       );

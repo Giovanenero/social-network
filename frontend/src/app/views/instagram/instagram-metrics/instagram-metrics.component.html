@@ -1,1 +1,47 @@
-<p>instagram-metrics works!</p>
+<section class="metric-cards">
+    <div class="card">
+        <p>{{ metrics.commentsCount }}</p>
+        <ng-icon name="bootstrapChatSquare"></ng-icon>
+    </div>
+    <div class="card">
+        <p>{{ metrics.likesCount }}</p>
+        <ng-icon name="bootstrapHeart"></ng-icon>
+    </div>
+    <div class="card">
+        <p>{{ metrics.interactions }}</p>
+        <ng-icon name="bootstrapHandIndex"></ng-icon>
+    </div>
+</section>
+
+<section class='container-graphics'>
+    <div class="card-graphic">
+        <canvas #myChartLikes></canvas>
+    </div>
+    <div class="card-graphic">
+        <canvas #myChartComments></canvas>
+    </div>
+    <div class="card-graphic">
+        <canvas #myChartFollowers></canvas>
+    </div>
+    <div class="card-graphic">
+        <table>
+            <caption>Desempenho das últimas 5 publicações</caption>
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Reações</th>
+                    <th>Comentários</th>
+                    <th>Engajamento</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let post of metrics.lastPosts">
+                    <th>12121</th>
+                    <th>{{ post.likes }}</th>
+                    <th>{{ post.comments }}</th>
+                    <th>{{ post.engagement.toFixed(2) }}%</th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>

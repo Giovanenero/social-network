@@ -1,0 +1,42 @@
+.metric-cards {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.metric-cards .card {
+    width: auto;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 10px;
+    padding: 10px;
+}
+
+.metric-cards .card span {
+    font-weight: 500;
+}
+
+.container-graphics {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.container-graphics .card-graphic {
+    width: 49%;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

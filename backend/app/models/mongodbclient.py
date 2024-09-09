@@ -26,7 +26,7 @@ class mongodbclient:
     def find(self, key, value, skip = 0, limit = None):
         try:
             query = {key: value}
-            cursor = self.collection.find(query).skip(skip)
+            cursor = self.collection.find(query, {'_id': 0}).skip(skip)
             if limit is not None:
                 cursor = cursor.limit(limit)
             return list(cursor)

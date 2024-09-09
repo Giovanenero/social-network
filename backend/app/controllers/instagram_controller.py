@@ -29,12 +29,7 @@ def get_posts():
         skip = int(request.args.get('skip'))
         limit = int(request.args.get('limit'))
         posts = instagram_model().get_posts(userid, skip, limit)
-
-        def remove_id(data):
-            data.pop('_id', None)
-            return data
-
-        posts = list(map(remove_id, posts))
+        posts = list(posts)
         return jsonify(posts)
     except:
         return jsonify([]), 400
@@ -43,7 +38,8 @@ def get_posts():
 def get_metrics():
     try:
         user_id = request.args.get('userid')
-        return jsonify(instagram_model().get_metrics(user_id)), 200
+        metrics = instagram_model().get_metrics(user_id)
+        return jsonify(metrics), 200
     except:
         return jsonify({}), 400
     
@@ -52,11 +48,7 @@ def get_comments():
     try:
         mediaid = request.args.get('mediaid')
         comments = instagram_model().get_comments(mediaid)
-        def remove_id(data):
-            data.pop('_id', None)
-            return data
-
-        comments = list(map(remove_id, comments))
+        comments = list(comments)
 
         return jsonify(comments), 200
     except:
