@@ -20,13 +20,14 @@
     </div>
 
     <ng-container *ngIf="post.medias[mediaIterator].isVideo; else isNotVideo">
-      <iframe
-        [src]="getVideo(post.medias[mediaIterator].url)"
-        frameborder="0" 
-        scrolling="no" 
+      <video
+        [src]="post.medias[mediaIterator].url"
+        controls
+        frameborder="0"
+        scrolling="no"
         allowtransparency="true"
       >
-      </iframe>
+      </video>
     </ng-container>
     <ng-template #isNotVideo>
       <img alt="img" [src]="post.medias[mediaIterator].url" />
@@ -35,7 +36,7 @@
 
   <div class="container-date">
     <ng-icon name="bootstrapClock"></ng-icon>
-    {{ getDate(post.date) }}
+    {{ getDate() }}
   </div>
 
   <article>
@@ -64,9 +65,14 @@
       </div>
       <div>
         <ng-icon name="bootstrapClock"></ng-icon>
-        {{ getDuration(post.duration) }}
+        {{ getDuration() }}
       </div>
     </ng-container>
+    <div>
+      <ng-icon name="bootstrapGraphUp"></ng-icon>
+      <p>Engajamento</p>
+      {{ getEngagement() }}
+    </div>
   </div>
 </div>
 

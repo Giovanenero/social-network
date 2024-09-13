@@ -14,6 +14,7 @@ import { Playlist } from '../models/Playlist';
 export class YoutubeService {
 
   private apiUrl = 'http://127.0.0.1:5000';
+  //private apiUrl = 'http://backend:5000';
 
   private channelId = "UCaldTW0ntt8_XOvllDpI0Dw";
   //private channelId = "UCUa8BOx2F3hlxgPcpZmnBnQ";

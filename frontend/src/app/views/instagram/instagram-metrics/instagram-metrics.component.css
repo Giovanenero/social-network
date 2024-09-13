@@ -24,6 +24,74 @@
     font-weight: 500;
 }
 
+.section-next-post {
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 0px;
+}
+
+.section-next-post table {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.section-next-post table caption {
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-bottom: 10px;
+    font-size: 1.3em;
+    font-weight: 500;
+}
+
+.section-next-post table thead,
+.section-next-post table tbody {
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+.section-next-post table thead {
+    border: 1px solid #282828;
+    border-bottom: none;
+}
+
+.section-next-post table tbody {
+    border: 1px solid #282828;
+    border-top: none;
+}
+
+.section-next-post table thead tr,
+.section-next-post table tbody tr {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.section-next-post table thead tr th,
+.section-next-post table tbody tr td {
+    width: 25%;
+    padding: 10px;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .container-graphics {
     width: 100%;
     height: auto;
@@ -31,6 +99,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     gap: 20px;
+    padding: 20px 0px;
 }
 
 .container-graphics .card-graphic {
@@ -39,4 +108,79 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.container-graphics .card-graphic table {
+    width: 100%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0px;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.container-graphics .card-graphic table caption {
+    font-size: 1.3em;
+    font-weight: 500;
+}
+
+.container-graphics .card-graphic table thead,
+.container-graphics .card-graphic table tbody {
+    width: 100%;
+    height: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container-graphics .card-graphic table tbody {
+    height: auto;
+}
+
+.container-graphics .card-graphic table thead tr,
+.container-graphics .card-graphic table tbody tr {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #282828;
+}
+
+.container-graphics .card-graphic table tbody tr {
+    height: 35px;
+}
+
+.container-graphics .card-graphic table thead tr th,
+.container-graphics .card-graphic table tbody tr td {
+    width: 25%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+}
+
+.container-graphics .card-graphic table tbody tr td {
+    font-weight: 400;
+}
+
+.not-show {
+    width: 100%;
+    margin: 0 auto;
+    height: 50px;
+    background-color: #DE00AE;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    border-radius: 5px;
+}
+
+.not-show h3 {
+    padding: 0px 20px;
+    color: white;
 }

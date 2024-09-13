@@ -2,11 +2,13 @@ import gridfs
 from pymongo import MongoClient
 import logging
 from bson.objectid import ObjectId
+import os
+
+MONGO_URI = os.getenv("MONGO_URI")
 
 class mongodbclient:
     def __init__(self, database, collection=None):
-        self.connection_string = "mongodb://localhost:27017"
-        self.client = MongoClient(self.connection_string)
+        self.client = MongoClient(MONGO_URI)
         self.database = self.client[database]
         if collection:
             self.collection = self.database[collection]
@@ -23,10 +25,14 @@ class mongodbclient:
             print(f"erro ao coletar arquivo com id {file_id}: {e}")
         return ""
 
-    def find(self, key, value, skip = 0, limit = None):
+    def find(self, key, value, skip = 0, limit = None, fields=None, sort_name = None, ascending = True):
         try:
             query = {key: value}
-            cursor = self.collection.find(query, {'_id': 0}).skip(skip)
+            projection = fields if fields is not None else {'_id': 0}
+            cursor = self.collection.find(query, projection).skip(skip)
+            if sort_name is not None:
+                order = 1 if ascending else -1
+                cursor.sort(sort_name, order)
             if limit is not None:
                 cursor = cursor.limit(limit)
             return list(cursor)

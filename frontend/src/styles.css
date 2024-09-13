@@ -52,6 +52,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   border-top: 6px solid transparent;
   animation: loading 1s linear infinite;
   z-index: 1001;
+  margin: 0px auto;
 }
 
 @keyframes loading {

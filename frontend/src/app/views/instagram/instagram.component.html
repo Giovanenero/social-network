@@ -1,77 +1,139 @@
 <div class="container-instagram">
   <section class="section-users padding">
-    <ul class="users">
-      <li *ngFor="let profile of profiles">
-        <button (click)="handleProfile(profile.username)">
-          <img [src]="profile.url" alt="user-logo" />
-          <p>{{ profile.username }}</p>
-        </button>
-      </li>
-    </ul>
+    <ng-container *ngIf="isLoadingProfiles; else isNotLoadingProfiles">
+      <span class="loading"></span>
+    </ng-container>
+    <ng-template #isNotLoadingProfiles>
+      <ul class="users">
+        <li *ngFor="let profile of profiles">
+          <button (click)="handleProfile(profile.username)">
+            <img [src]="profile.url" alt="user-logo" />
+            <p>{{ profile.username }}</p>
+          </button>
+        </li>
+      </ul>
+    </ng-template>
   </section>
 
   <span class="line"></span>
 
   <section class="section-profile padding">
-    <img alt="logo" [src]="selectedProfile.url"/>
-    <div class="profile-info">
-      <div *ngIf="selectedProfile.fullname; else onlyUsername">
-        <h1>{{ selectedProfile.fullname }}</h1>
-        <p>{{ selectedProfile.username }}</p>
-      </div>
-      <ng-template #onlyUsername>
-        <div>
-          <h1>{{ selectedProfile.username }}</h1>
+    <ng-container *ngIf="isLoadingProfiles; else isNotLoadingProfile">
+      <span class="loading"></span>
+    </ng-container>
+    <ng-template #isNotLoadingProfile>
+      <img alt="logo" [src]="selectedProfile.url" />
+      <div class="profile-info">
+        <div *ngIf="selectedProfile.fullname; else onlyUsername">
+          <h1>{{ selectedProfile.fullname }}</h1>
+          <p>{{ selectedProfile.username }}</p>
         </div>
-      </ng-template>
-      <ul>
-        <li><p><span>{{ selectedProfile.mediacount }}</span> publicações</p></li>
-        <li><p><span>{{ selectedProfile.followers }}</span> seguidores</p></li>
-        <li><p><span>{{ selectedProfile.followees }}</span> seguindo</p></li>
-      </ul>
-      <article>
-        <p>{{ selectedProfile.biography }}</p>
-      </article>
-    </div>
+        <ng-template #onlyUsername>
+          <div>
+            <h1>{{ selectedProfile.username }}</h1>
+          </div>
+        </ng-template>
+        <ul>
+          <li>
+            <p>
+              <span>{{ selectedProfile.mediacount }}</span> publicações
+            </p>
+          </li>
+          <li>
+            <p>
+              <span>{{ selectedProfile.followers }}</span> seguidores
+            </p>
+          </li>
+          <li>
+            <p>
+              <span>{{ selectedProfile.followees }}</span> seguindo
+            </p>
+          </li>
+        </ul>
+        <article>
+          <p>{{ selectedProfile.biography }}</p>
+        </article>
+      </div>
+    </ng-template>
   </section>
 
-  <span class="line"></span>
+  <!-- <span class="line"></span>
 
   <section class="section-similar padding">
     <h3>Perfils similares</h3>
     <ul>
       <li></li>
     </ul>
-  </section>
+  </section> -->
 
   <nav class="padding">
     <ul>
-      <li><button (click)="handleClick('posts')">Postagens</button></li>
+      <li><button (click)="handleClick('posts')">Publicações</button></li>
       <li><button (click)="handleClick('metrics')">Métricas</button></li>
     </ul>
   </nav>
 
   <ng-container *ngIf="isPost; else isMetrics">
-    <div class="button-pages">
-      <button class="button-next-prev" (click)="handlePrev()">
-        <ng-icon name="bootstrapChevronLeft"></ng-icon>
-        Anterior
-      </button>
-      <button [ngClass]="index === selectedPage ? 'selected-button' : ''" *ngFor="let index of indexs" (click)="handlePage(index)">
-        {{ index }}
-      </button>
-      <button class="button-next-prev" (click)="handleNext()">
-        Próximo
-        <ng-icon name="bootstrapChevronRight"></ng-icon>
-      </button>
-    </div>
-    <section class="padding section-posts">
-      <app-card-post *ngFor="let post of posts" [post]="post"></app-card-post>
-    </section>
+    <ng-container *ngIf="isLoadingPosts; else isNotLoadingPosts">
+      <span class="loading"></span>
+    </ng-container>
+    <ng-template #isNotLoadingPosts>
+      <ng-container *ngIf="posts.length > 0; else noPosts">
+        <div class="button-pages" *ngIf="posts.length > 11">
+          <button class="button-next-prev" (click)="handlePrev()">
+            <ng-icon name="bootstrapChevronLeft"></ng-icon>
+            Anterior
+          </button>
+          <button
+            [ngClass]="index === selectedPage ? 'selected-button' : ''"
+            *ngFor="let index of indexs"
+            (click)="handlePage(index)"
+          >
+            {{ index }}
+          </button>
+          <button class="button-next-prev" (click)="handleNext()">
+            Próximo
+            <ng-icon name="bootstrapChevronRight"></ng-icon>
+          </button>
+        </div>
+        <section class="padding section-posts">
+          <app-card-post
+            *ngFor="let post of posts"
+            [post]="post"
+            [followers]="selectedProfile.followers"
+          ></app-card-post>
+        </section>
+        <div class="button-pages" *ngIf="posts.length > 11">
+          <button class="button-next-prev" (click)="handlePrev()">
+            <ng-icon name="bootstrapChevronLeft"></ng-icon>
+            Anterior
+          </button>
+          <button
+            [ngClass]="index === selectedPage ? 'selected-button' : ''"
+            *ngFor="let index of indexs"
+            (click)="handlePage(index)"
+          >
+            {{ index }}
+          </button>
+          <button class="button-next-prev" (click)="handleNext()">
+            Próximo
+            <ng-icon name="bootstrapChevronRight"></ng-icon>
+          </button>
+        </div>
+      </ng-container>
+      <ng-template #noPosts>
+        <div class="not-show">
+          <h3>Não há publicações deste perfil</h3>
+        </div>
+      </ng-template>
+    </ng-template>
   </ng-container>
   <ng-template #isMetrics>
     <section class="padding">
-      <app-instagram-metrics [userid]="selectedProfile.userid"></app-instagram-metrics>
+      <app-instagram-metrics
+        [userid]="selectedProfile.userid"
+        [postsLength]="posts.length"
+      ></app-instagram-metrics>
     </section>
   </ng-template>
 </div>

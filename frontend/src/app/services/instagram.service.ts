@@ -113,7 +113,7 @@ export class InstagramService {
       if (metrics) {
         const filteredPosts = metrics.filter((data: any) => {return data.userid == userid });
         if (filteredPosts.length > 0) {
-          return of(filteredPosts);
+          return of(filteredPosts[0]);
         }
       }
     }

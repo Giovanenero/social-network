@@ -79,7 +79,7 @@
   height: 40px;
 }
 
-.container-card-post .container-sidecar iframe {
+.container-card-post .container-sidecar video {
   position: absolute;
   top: 0;
   left: 0;

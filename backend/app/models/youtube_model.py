@@ -1,13 +1,14 @@
+import os
 from googleapiclient.discovery import build
 from datetime import datetime
 import logging
 
-# Configuração de logging
 logging.basicConfig(level=logging.ERROR, format='%(asctime)s - %(levelname)s - %(message)s')
+API_KEY = os.getenv("API_KEY_YOUTUBE_DATA")
 
 class youtube_model:
-    def __init__(self, api_key):
-        self.youtube = build("youtube", "v3", developerKey=api_key)
+    def __init__(self):
+        self.youtube = build("youtube", "v3", developerKey=API_KEY)
 
     def get_channel_info(self, channel_id):
         try:

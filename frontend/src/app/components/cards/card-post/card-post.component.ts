@@ -13,6 +13,7 @@ import { InstagramCommentsPopupComponent } from '../../../views/popups/instagram
   styleUrl: './card-post.component.css',
 })
 export class CardPostComponent implements OnInit {
+  @Input() followers: number = 0
   @Input() post: Post = {
     mediaid: '',
     caption: '',
@@ -67,7 +68,8 @@ export class CardPostComponent implements OnInit {
     return  this.sanitizer.bypassSecurityTrustResourceUrl(this.post.medias[this.mediaIterator].url);
   }
 
-  getDuration(duration: number): string {
+  getDuration(): string {
+    let duration = this.post.duration
     if(duration >= 3600){
       return Math.floor(duration / (3600)) + 'h'
     } else if(duration >= 60) {
@@ -76,8 +78,17 @@ export class CardPostComponent implements OnInit {
     return duration.toFixed(0) + 's';
   }
 
-  getDate(date: string): string {
-    const format = new Date(date);
+  getDate(): string {
+    const format = new Date(this.post.date);
     return format.toLocaleDateString() + ' às ' + format.toLocaleTimeString();
+  }
+
+  getEngagement(): string {
+    const interactions = this.post.likeCount + this.post.commentCount;
+    if(this.followers > 0){
+      const engagement = (interactions / this.followers) * 100
+      return engagement.toFixed(2) + "%"
+    }
+    return "0.00%"
   }
 }

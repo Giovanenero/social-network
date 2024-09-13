@@ -1,47 +1,105 @@
-<section class="metric-cards">
+<ng-container *ngIf="isLoading; else isNotLoading">
+  <span class="loading"></span>
+</ng-container>
+<ng-template #isNotLoading>
+  <section class="metric-cards">
     <div class="card">
-        <p>{{ metrics.commentsCount }}</p>
-        <ng-icon name="bootstrapChatSquare"></ng-icon>
+      <span>Total de comentários</span>
+      <p>{{ metrics.commentsCount }}</p>
+      <ng-icon name="bootstrapChatSquare"></ng-icon>
     </div>
     <div class="card">
-        <p>{{ metrics.likesCount }}</p>
-        <ng-icon name="bootstrapHeart"></ng-icon>
+      <span>Total de reações</span>
+      <p>{{ metrics.likesCount }}</p>
+      <ng-icon name="bootstrapHeart"></ng-icon>
     </div>
     <div class="card">
-        <p>{{ metrics.interactions }}</p>
-        <ng-icon name="bootstrapHandIndex"></ng-icon>
+      <span>Total de interações</span>
+      <p>{{ metrics.interactions }}</p>
+      <ng-icon name="bootstrapHandIndex"></ng-icon>
     </div>
-</section>
+    <div class="card">
+      <span>Total de vídeos</span>
+      <p>{{ metrics.videosCount }}</p>
+      <ng-icon name="bootstrapCameraVideo"></ng-icon>
+    </div>
+    <div class="card">
+      <span>Total de visualizações em vídeos</span>
+      <p>{{ metrics.viewsCount }}</p>
+      <ng-icon name="bootstrapEye"></ng-icon>
+    </div>
+    <div class="card">
+      <span>Média de visualizações em vídeos</span>
+      <p>{{ getAverageViews() }}</p>
+      <ng-icon name="bootstrapEye"></ng-icon>
+    </div>
+  </section>
 
-<section class='container-graphics'>
+  <section class="section-next-post">
+    <table>
+      <caption>
+        Desempenho esperado de uma nova publicação contendo imagens no instagram
+      </caption>
+      <thead>
+        <tr>
+          <th>Reações</th>
+          <th>Comentários</th>
+          <th>Interações</th>
+          <th>Engajamento</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ metrics.nextPost.likeCount }}</td>
+          <td>{{ metrics.nextPost.commentCount }}</td>
+          <td>
+            {{ metrics.nextPost.likeCount + metrics.nextPost.commentCount }}
+          </td>
+          <td>{{ metrics.nextPost.engajament.toFixed(2) }}%</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="container-graphics">
     <div class="card-graphic">
+      <canvas #myChartFollowers></canvas>
+    </div>
+    <ng-container *ngIf="metrics.lastPosts.length; else noPosts">
+      <div class="card-graphic">
         <canvas #myChartLikes></canvas>
-    </div>
-    <div class="card-graphic">
+      </div>
+      <div class="card-graphic">
         <canvas #myChartComments></canvas>
-    </div>
-    <div class="card-graphic">
-        <canvas #myChartFollowers></canvas>
-    </div>
-    <div class="card-graphic">
+      </div>
+      <div class="card-graphic">
         <table>
-            <caption>Desempenho das últimas 5 publicações</caption>
-            <thead>
-                <tr>
-                    <th>Data</th>
-                    <th>Reações</th>
-                    <th>Comentários</th>
-                    <th>Engajamento</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let post of metrics.lastPosts">
-                    <th>12121</th>
-                    <th>{{ post.likes }}</th>
-                    <th>{{ post.comments }}</th>
-                    <th>{{ post.engagement.toFixed(2) }}%</th>
-                </tr>
-            </tbody>
+          <caption>
+            Desempenho das últimas 5 publicações
+          </caption>
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Reações</th>
+              <th>Comentários</th>
+              <th>Engajamento</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let post of metrics.lastPosts">
+              <td>{{ getDate(post.date) }}</td>
+              <td>{{ post.likes }}</td>
+              <td>{{ post.comments }}</td>
+              <td>{{ post.engagement.toFixed(2) }}%</td>
+            </tr>
+          </tbody>
         </table>
-    </div>
-</section>
+      </div>
+    </ng-container>
+    <ng-template #noPosts>
+      <div class="not-show">
+        <h3>Não há publicações deste perfil</h3>
+      </div>
+    </ng-template>
+  </section>
+</ng-template>

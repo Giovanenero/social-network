@@ -1,12 +1,7 @@
 from flask import Blueprint, jsonify, request
 from app.models.youtube_model import youtube_model
-from dotenv import load_dotenv
-import os
 
 youtube_bp = Blueprint('youtube', __name__)
-
-load_dotenv("../.env")
-api_key = os.getenv("API_KEY_YOUTUBE_DATA")
 
 @youtube_bp.route('/getchannel', methods=['GET'])
 def get_channel():
@@ -14,7 +9,7 @@ def get_channel():
     if not channel_id:
         return jsonify({"error": "channelId é obrigatório"}), 400
 
-    youtube = youtube_model(api_key)
+    youtube = youtube_model()
     channel = youtube.get_channel_info(channel_id)
 
     if not channel:
@@ -31,7 +26,7 @@ def get_videos():
     if not channel_id:
         return jsonify({})
     
-    youtube = youtube_model(api_key)
+    youtube = youtube_model()
     videos = youtube.get_videos(channel_id)
     videos = [{k: v for k, v in video.items() if k != '_id'} for video in videos]
     return jsonify(videos)
@@ -42,7 +37,7 @@ def get_comments():
     if not video_id:
         return jsonify({})
     
-    youtube = youtube_model(api_key)
+    youtube = youtube_model()
     comments = youtube.get_comments(video_id)
     return jsonify(comments)
 
@@ -53,7 +48,7 @@ def get_playlists():
     if not channel_id:
         return jsonify([])
     try:
-        youtube = youtube_model(api_key)
+        youtube = youtube_model()
         playlists = youtube.get_playlists(channel_id)
         return list(map(lambda x: {
             'videosId': x['videosId'],

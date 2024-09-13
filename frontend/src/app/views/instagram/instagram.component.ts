@@ -45,6 +45,7 @@ export class InstagramComponent implements OnInit {
     this.getPosts();
   }
 
+  isLoadingProfiles: boolean = true
   getProfiles(): void {
     this.InstagramService.getProfiles().subscribe({
       next: (data: Profile[]) => { 
@@ -56,16 +57,16 @@ export class InstagramComponent implements OnInit {
         for(let i = 0; i < this.totalPages && i < 9; i++){
           this.indexs.push(i + 1)
         }
-        //this.isLoadingChannel = false;
+        this.isLoadingProfiles = false;
       },
       error: (error) => { 
         console.error('Erro ao obter usuários do instagram:', error); 
-        //this.isLoadingChannel = false;
-        //this.showChannel = false;
+        this.isLoadingProfiles = false;
       },
     });
   }
 
+  isLoadingPosts: boolean = true
   getPosts(): void {
     this.InstagramService.getPosts(this.selectedProfile.userid, (this.selectedPage - 1) * this.limit, this.limit).subscribe({
       next: (posts: Post[]) => { 
@@ -73,11 +74,13 @@ export class InstagramComponent implements OnInit {
         //this.selectedProfile = this.profiles[0]
         //onsole.log(this.selectedProfile)
         //this.isLoadingChannel = false;
+        this.isLoadingPosts = false;
       },
       error: (error) => { 
         console.error(`Erro ao obter posts do usuário ${this.selectedProfile.userid} do instagram:`, error); 
         //this.isLoadingChannel = false;
         //this.showChannel = false;
+        this.isLoadingPosts = false;
       },
     });
   }
@@ -103,6 +106,8 @@ export class InstagramComponent implements OnInit {
         this.renderer.removeClass(profileSection, 'animate-profile');
       }, 500);
     }
+
+    this.isPost = true
   }
 
   handleClick(name: string): void {
