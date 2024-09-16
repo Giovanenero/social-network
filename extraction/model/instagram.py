@@ -26,6 +26,7 @@ class Instagram:
         self.collection_profiles = self.db['profiles']
         self.collection_posts = self.db['posts']
         self.collection_comments = self.db['comments']
+        self.collection_statistics = self.db['statistics']
         self.fs = gridfs.GridFS(self.db)
 
         self.collection_profiles.create_index('userid', unique=True)
