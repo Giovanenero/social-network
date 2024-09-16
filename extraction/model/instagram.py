@@ -376,7 +376,7 @@ class Instagram:
                             'username': owner.username if owner else '',
                             'replies': await self.fetch_replies(answers) if len(answers) else [],
                             'mediaid': mediaid,
-                            'url': self.fetch_url(
+                            'url': await self.fetch_url(
                                 f'{owner.username}_profile_pic.jpg',
                                 owner.profile_pic_url if owner else ''
                             ),
